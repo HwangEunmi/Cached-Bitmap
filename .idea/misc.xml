@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="EclipseCodeFormatter">
+    <option name="defaultSettings" value="true" />
+    <option name="formatter" value="ECLIPSE" />
+    <option name="id" value="1486603983938" />
+    <option name="name" value="default" />
+    <option name="pathToConfigFileJava" value="D:/openit-Eclipse-Formatter.2013.R1.xml" />
+    <option name="selectedJavaProfile" value="openit Formatter - 2013.R1" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+</project>

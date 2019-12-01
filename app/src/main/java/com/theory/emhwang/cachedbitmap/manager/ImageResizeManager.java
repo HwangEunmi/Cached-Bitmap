@@ -1,5 +1,8 @@
 package com.theory.emhwang.cachedbitmap.manager;
 
+import java.io.IOException;
+import java.net.URL;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -8,9 +11,6 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
-
-import java.io.IOException;
-import java.net.URL;
 
 public class ImageResizeManager {
 
@@ -75,14 +75,7 @@ public class ImageResizeManager {
 
         @Override
         protected Bitmap doInBackground(final URL... urls) {
-            Bitmap bitmap = null;
-            try {
-                bitmap = BitmapFactory.decodeStream(urls[0].openStream());
-            } catch (final IOException e) {
-                e.printStackTrace();
-            }
             return runImageResize(urls[0]);
-            //            return bitmap;
         }
 
         @Override
@@ -111,6 +104,7 @@ public class ImageResizeManager {
             int afterSize = 1;
 
             try {
+                // 이미지를 메모리에 올려놓지 않고 해상도만 알아낼 수 있다.
                 options.inJustDecodeBounds = true;
                 BitmapFactory.decodeStream(url.openStream(), null, options);
 
@@ -119,7 +113,6 @@ public class ImageResizeManager {
 
                 // 이미지의 크기 조절이 필요한 경우
                 // Ex. inSampleSize가 2인 경우, 원본의 너비/높이 1/2 사이즈 Bitmap을 리턴한다.
-                Log.d("THEEND", "mView: " + mView.getHeight() + ", " + mView.getWidth());
                 if (height > mView.getHeight() || width > mView.getWidth()) {
                     final int halfHeight = height / 2;
                     final int halfWidth = width / 2;
@@ -129,6 +122,7 @@ public class ImageResizeManager {
                     }
                     while (((halfHeight / afterSize) >= mView.getHeight())
                            && ((halfWidth / afterSize) >= mView.getWidth())) {
+                        // (2의 지수로 만드는 이유는 2의 지수가 디코딩 속도가 가장 빠르다고 함)
                         afterSize *= 2;
                     }
                 }
@@ -165,3 +159,7 @@ public class ImageResizeManager {
     }
 
 }
+// [1] 큰 이미지를 (효율적으로) 화면에 보여주기
+// 고해상도의 이미지를 불러와 그대로 메모리에 넣고 화면에 보여주는 것은 OutOfMemory 발생 위험이 있다.
+// -> 원래 이미지의 해상도와 화면에 보이려는 ImageView의 해상도를 알아내어 품질을 떨어트리면 된다.
+// -> 즉, 이미지의 해상도를 ImageView의 크기만큼 해상도를 떨어트린다.

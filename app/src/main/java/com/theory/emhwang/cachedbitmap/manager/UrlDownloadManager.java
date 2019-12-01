@@ -1,23 +1,16 @@
 package com.theory.emhwang.cachedbitmap.manager;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.util.Log;
-
-import com.theory.emhwang.cachedbitmap.R;
-import com.theory.emhwang.cachedbitmap.listener.IUrlDownloadCallbak;
-
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
+
+import com.theory.emhwang.cachedbitmap.listener.IUrlDownloadCallbak;
+
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.AsyncTask;
 
 public class UrlDownloadManager {
 
@@ -120,7 +113,6 @@ public class UrlDownloadManager {
             // url로 된 이미지를 다운로드하여 return 한다.
             InputStream is = null;
             try {
-                // Log.d("THEEND", "filePath: " + filePath);
                 final URL url = new URL(filePath);
                 final HttpURLConnection conn = (HttpURLConnection)url.openConnection();
                 conn.setConnectTimeout(15000);
